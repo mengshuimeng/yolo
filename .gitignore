@@ -1,0 +1,8 @@
+# 忽略整个目录（推荐写法）
+.lingma/
+build/
+data/
+video/
+
+# 忽略特定文件
+datasets.zip
