@@ -1,7 +1,7 @@
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
-train:  .\datasets\defect1\train.txt
-val:    .\datasets\defect1\val.txt
-test:   .\datasets\defect1\test.txt
+train:  ./datasets/defect1/train.txt
+val:    ./datasets/defect1/val.txt
+test:   ./datasets/defect1/test.txt
 
 # number of classes
 nc: 1

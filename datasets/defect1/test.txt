@@ -1,2 +1,2 @@
-D:\Documents\code\python\yolo\datasets/defect1/images/test/001.jpg
-D:\Documents\code\python\yolo\datasets/defect1/images/test/003.jpg
+./images/test/001.jpg
+./images/test/003.jpg

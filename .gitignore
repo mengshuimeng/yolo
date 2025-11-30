@@ -5,6 +5,10 @@ build/
 data/
 video/
 temp/
+val/
+runs/detect/predict
 
 # 忽略特定文件
 datasets.zip
+yolo11n.pt
+yolo11s.pt
