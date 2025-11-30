@@ -3,6 +3,7 @@
 build/
 data/
 video/
+temp/
 
 # 忽略特定文件
 datasets.zip
