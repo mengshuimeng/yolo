@@ -7,6 +7,7 @@ video/
 temp/
 val/
 runs/detect/predict
+data_ug_kz/
 
 # 忽略特定文件
 datasets.zip

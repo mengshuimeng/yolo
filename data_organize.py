@@ -28,28 +28,28 @@ import random
 import os
 
 # 原始路径
-root = "temp"
+root = "data_ug_kz"
 image_original_path = root + "/images/"
 label_original_path = root + "/labels/"
 
 cur_path = os.getcwd()
 
 # 训练集路径
-train_image_path = os.path.join(cur_path, "datasets/defect1/images/train/")
-train_label_path = os.path.join(cur_path, "datasets/defect1/labels/train/")
+train_image_path = os.path.join(cur_path, "datasets/defect2/images/train/")
+train_label_path = os.path.join(cur_path, "datasets/defect2/labels/train/")
 
 # 验证集路径
-val_image_path = os.path.join(cur_path, "datasets/defect1/images/val/")
-val_label_path = os.path.join(cur_path, "datasets/defect1/labels/val/")
+val_image_path = os.path.join(cur_path, "datasets/defect2/images/val/")
+val_label_path = os.path.join(cur_path, "datasets/defect2/labels/val/")
 
 # 测试集路径
-test_image_path = os.path.join(cur_path, "datasets/defect1/images/test/")
-test_label_path = os.path.join(cur_path, "datasets/defect1/labels/test/")
+test_image_path = os.path.join(cur_path, "datasets/defect2/images/test/")
+test_label_path = os.path.join(cur_path, "datasets/defect2/labels/test/")
 
 # 训练集目录
-list_train = os.path.join(cur_path, "datasets/defect1/train.txt")
-list_val = os.path.join(cur_path, "datasets/defect1/val.txt")
-list_test = os.path.join(cur_path, "datasets/defect1/test.txt")
+list_train = os.path.join(cur_path, "datasets/defect2/train.txt")
+list_val = os.path.join(cur_path, "datasets/defect2/val.txt")
+list_test = os.path.join(cur_path, "datasets/defect2/test.txt")
 
 train_percent = 0.8
 val_percent = 0.1
