@@ -1,2 +1,0 @@
-./images/test/001.jpg
-./images/test/003.jpg
