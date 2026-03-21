@@ -1,14 +1,61 @@
-# 忽略整个目录（推荐写法）
-.lingma/
-.idea/
-build/
-data/
+# --- 2. 数据集 (通常很大，或者包含隐私数据) ---
+data_produce/
+datasets/
 video/
-temp/
-runs/detect/predict
-data_ug_kz/
 
-# 忽略特定文件
-datasets.zip
-yolo11n.pt
-yolo11s.pt
+# --- 3. Python 缓存与编译文件 ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- 5. IDE 与编辑器配置 (个人偏好，不需要共享) ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store  # Mac 系统垃圾文件
+
+# --- 6. 日志文件 ---
+*.log
+
+
+# --- 7. 压缩包 ---
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+*.iso
+*.dmg
+*.pkg
+
+# --- 8. 临时文件 ---
+*.jpg
+*.png
+*.gif
+*.mp4
+*.avi
