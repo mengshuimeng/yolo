@@ -7,7 +7,6 @@
 *.pt
 
 # --- 2. 数据集 (通常很大，或者包含隐私数据) ---
-data_produce/
 datasets/
 video/
 
