@@ -1,4 +1,10 @@
 *.txt
+*.jpg
+*.png
+*.gif
+*.mp4
+*.avi
+*.pt
 
 # --- 2. 数据集 (通常很大，或者包含隐私数据) ---
 data_produce/
@@ -57,8 +63,4 @@ wheels/
 *.pkg
 
 # --- 8. 临时文件 ---
-*.jpg
-*.png
-*.gif
-*.mp4
-*.avi
+
