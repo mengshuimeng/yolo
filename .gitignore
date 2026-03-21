@@ -26,6 +26,7 @@ wheels/
 *.egg
 
 # --- 5. IDE 与编辑器配置 (个人偏好，不需要共享) ---
+.lingma/
 .idea/
 .vscode/
 *.swp
