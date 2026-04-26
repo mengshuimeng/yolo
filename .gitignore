@@ -1,5 +1,6 @@
 *.txt
 *.jpg
+*.jpeg
 *.png
 *.gif
 *.mp4
@@ -7,9 +8,12 @@
 *.pt
 data_produce/
 
+
 # --- 2. 数据集 (通常很大，或者包含隐私数据) ---
 datasets/
 video/
+output/
+runs/
 
 # --- 3. Python 缓存与编译文件 ---
 __pycache__/

@@ -8,14 +8,15 @@ scp -r "D:\Documents\code\python\all_of_all\data_produce\datasets0321" jsh@192.1
 
 2. 组织.yaml
 
-3. 
+3. yolo识别数据集
 ```
  conda activate yolo
  ```
 
 
-···yolo task=detect mode=train \
-data=/home/jsh/yolo/box_datasets0321.yaml \
+···
+yolo task=detect mode=train \
+data=D:\Documents\code\python\yolo\yaml\4cjsjds.yaml \
 model=yolo11s.pt \
 epochs=200 \
 batch=32 \
@@ -29,4 +30,5 @@ mosaic=0.5 \
 mixup=0.1 \
 workers=8 \
 cache=True \
-plots=True```
+plots=True
+```

@@ -65,7 +65,7 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
 
     # 创建显示窗口
     cv2.namedWindow('Camera Recording', cv2.WINDOW_NORMAL)
-    cv2.resizeWindow('Camera Recording', 640, 480)
+    cv2.resizeWindow('Camera Recording', 1280, 720)
 
     try:
         while True:
@@ -146,16 +146,21 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
 def main():
     """主函数"""
     # 生成带时间戳的文件名
+    # 摄像头参数
+    target_fps = 30
+
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"video_{timestamp}.mp4"
+
 
     print("摄像头录像程序启动")
     print("=" * 50)
 
     # 尝试不同摄像头索引
-    for cam_idx in [3]:
+    for cam_idx in [0,3, 4, 5, 6, 7, 8, 9, 10]:
         print(f"尝试摄像头索引 {cam_idx}...")
-        if record_video(filename, cam_idx, target_fps=12):
+        if record_video(filename, cam_idx, target_fps):
             print("录制成功完成！")
             break
         else:

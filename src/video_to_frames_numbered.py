@@ -47,11 +47,11 @@ def video_to_frames_numbered(video_path: str, out_dir: str, img_ext: str = "jpg"
 
 def parse_args():
     p = argparse.ArgumentParser(description="将视频拆成图片并按 1,2,3... 命名。")
-    p.add_argument("-i", "--input", default="D:\Documents\code\python\\all_of_all\\0316\\video_20260318_213944.mp4", help="输入视频文件路径 ")
-    p.add_argument("-o", "--output", default="./output", help="输出图片文件夹 (默认: ./frames)")
+    p.add_argument("-i", "--input", default="D:\Documents\code\python\yolo\src\\jsj.mp4", help="输入视频文件路径 ")
+    p.add_argument("-o", "--output", default="../data_produce/jsj", help="输出图片文件夹 (默认: ./frames)")
     p.add_argument("-f", "--format", default="jpg", choices=["jpg", "png", "bmp"], help="输出图片格式 (默认: jpg)")
     p.add_argument("--step", type=int, default=1, help="抽帧步长（默认1，表示每帧保存）")
-    p.add_argument("--start", type=int, default=3553, help="输出序号起始值，默认1")
+    p.add_argument("--start", type=int, default=1, help="输出序号起始值，默认1")
     return p.parse_args()
 
 if __name__ == "__main__":

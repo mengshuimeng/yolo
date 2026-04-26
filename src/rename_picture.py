@@ -9,6 +9,9 @@ from pathlib import Path
 import argparse
 import re
 
+from torchvision.transforms.v2.functional import jpeg
+
+
 def natural_sort_key(text):
     """
     自然排序键函数，将字符串中的数字部分转换为整数进行比较
@@ -44,7 +47,8 @@ def rename_images_in_folder(input_folder_path, output_folder_path, start_index=1
     # 按顺序重命名并复制到输出文件夹
     for index, filename in enumerate(images, start=start_index):
         # 获取原始文件扩展名
-        ext = Path(filename).suffix.lower()
+        # ext = Path(filename).suffix.lower()
+        ext = '.jpg'
         # 创建新文件名
         new_filename = f"{index:04d}{ext}"
         old_filepath = os.path.join(input_folder_path, filename)
@@ -59,8 +63,8 @@ def rename_images_in_folder(input_folder_path, output_folder_path, start_index=1
 def parse_args():
     """解析命令行参数"""
     parser = argparse.ArgumentParser(description="将一个文件夹中的图片按顺序重命名")
-    parser.add_argument("-i", "--input", default="./output", help="输入图片文件夹路径 (默认: ./input)")
-    parser.add_argument("-o", "--output", default="./1212", help="输出图片文件夹路径 (默认: ./output)")
+    parser.add_argument("-i", "--input", default="./0321", help="输入图片文件夹路径 (默认: ./input)")
+    parser.add_argument("-o", "--output", default="./1213", help="输出图片文件夹路径 (默认: ./output)")
     parser.add_argument("-s", "--start", type=int, default=1, help="起始编号 (默认: 1)")
     return parser.parse_args()
 

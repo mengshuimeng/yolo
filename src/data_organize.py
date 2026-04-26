@@ -5,7 +5,7 @@ train_percent = 0.8  # 80% 训练集
 val_percent = 0.1    # 10% 验证集
 test_percent = 0.1   # 10% 测试集
 
-datasets/defect/
+datasets/datasets_name/
 ├── images/
 │   ├── train/    # 训练集图片
 │   ├── val/      # 验证集图片
@@ -17,7 +17,6 @@ datasets/defect/
 ├── train.txt     # 训练集索引
 ├── val.txt       # 验证集索引
 └── test.txt      # 测试集索引
-
 """
 
 
@@ -27,13 +26,13 @@ import random
 import os
 
 # 配置参数
-DATASET_NAME = "de"  # 可自定义数据集名称
+DATASET_NAME = "4cjsjds"  # 可自定义数据集名称
 train_percent = 0.8
 val_percent = 0.1
 test_percent = 0.1
 
 # 原始路径
-root = "data"
+root = "D:\Documents\code\python\yolo\datasets\\4cjsjds"
 image_original_path = root + "/images/"
 label_original_path = root + "/labels/"
 
