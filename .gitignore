@@ -6,6 +6,7 @@
 *.mp4
 *.avi
 *.pt
+*.json
 data_produce/
 
 
@@ -14,6 +15,7 @@ datasets/
 video/
 output/
 runs/
+pts/
 
 # --- 3. Python 缓存与编译文件 ---
 __pycache__/
