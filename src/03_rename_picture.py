@@ -9,7 +9,14 @@ from pathlib import Path
 import argparse
 import re
 
-from torchvision.transforms.v2.functional import jpeg
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
+def resolve_project_path(path_str: str) -> Path:
+    path = Path(path_str)
+    if path.is_absolute():
+        return path
+    return (PROJECT_ROOT / path).resolve()
 
 
 def natural_sort_key(text):
@@ -21,22 +28,30 @@ def natural_sort_key(text):
 
 def rename_images_in_folder(input_folder_path, output_folder_path, start_index=1):
     """
-    将一个文件夹中的图片按照顺序重命名，比如1.jpg,2.jpg...
+    将一个文件夹中的图片按照顺序重命名，比如0001.jpg、0002.jpg...
 
     Args:
         input_folder_path (str): 输入图片文件夹路径
         output_folder_path (str): 输出图片文件夹路径
         start_index (int): 起始编号，默认为1
     """
+    input_path = resolve_project_path(input_folder_path)
+    output_path = resolve_project_path(output_folder_path)
+
+    if not input_path.exists():
+        raise FileNotFoundError(f"输入图片文件夹不存在: {input_path}")
+    if not input_path.is_dir():
+        raise ValueError(f"输入路径不是文件夹: {input_path}")
+
     # 创建输出文件夹
-    Path(output_folder_path).mkdir(parents=True, exist_ok=True)
+    output_path.mkdir(parents=True, exist_ok=True)
 
     # 支持的图片格式
     image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff'}
 
     # 获取文件夹中的所有图片文件
     images = []
-    for file in os.listdir(input_folder_path):
+    for file in os.listdir(input_path):
         if Path(file).suffix.lower() in image_extensions:
             images.append(file)
 
@@ -51,8 +66,10 @@ def rename_images_in_folder(input_folder_path, output_folder_path, start_index=1
         ext = '.jpg'
         # 创建新文件名
         new_filename = f"{index:04d}{ext}"
-        old_filepath = os.path.join(input_folder_path, filename)
-        new_filepath = os.path.join(output_folder_path, new_filename)
+        old_filepath = input_path / filename
+        new_filepath = output_path / new_filename
+        if new_filepath.exists():
+            raise FileExistsError(f"目标文件已存在，停止以避免覆盖: {new_filepath}")
         # 复制文件并重命名
         shutil.copy2(old_filepath, new_filepath)
         print(f"已复制：{filename} -> {new_filename}")
@@ -63,8 +80,8 @@ def rename_images_in_folder(input_folder_path, output_folder_path, start_index=1
 def parse_args():
     """解析命令行参数"""
     parser = argparse.ArgumentParser(description="将一个文件夹中的图片按顺序重命名")
-    parser.add_argument("-i", "--input", default="./0321", help="输入图片文件夹路径 (默认: ./input)")
-    parser.add_argument("-o", "--output", default="./1213", help="输出图片文件夹路径 (默认: ./output)")
+    parser.add_argument("-i", "--input", default=r"datasets_original\\20260426_dropzone1", help="输入图片文件夹路径（相对工程根目录）")
+    parser.add_argument("-o", "--output", default=r"datasets_original\\20260426_dropzone2", help="输出图片文件夹路径（相对工程根目录）")
     parser.add_argument("-s", "--start", type=int, default=1, help="起始编号 (默认: 1)")
     return parser.parse_args()
 

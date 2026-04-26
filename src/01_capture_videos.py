@@ -5,9 +5,26 @@ import cv2
 import time
 from datetime import datetime
 import os
+from pathlib import Path
 
 
-def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fps=12):
+def resolve_output_path(filename: str) -> str:
+    project_root = Path(__file__).resolve().parent.parent
+    output_dir = project_root / "videos"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return str(output_dir / filename)
+
+
+def select_fourcc(output_filename: str) -> int:
+    suffix = Path(output_filename).suffix.lower()
+    if suffix in {".mp4", ".m4v", ".mov"}:
+        return cv2.VideoWriter_fourcc(*"mp4v")
+    if suffix == ".avi":
+        return cv2.VideoWriter_fourcc(*"XVID")
+    return cv2.VideoWriter_fourcc(*"mp4v")
+
+
+def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fps=12, max_read_failures=30):
     """
     摄像头录像程序 - 无 OSD 显示版本
 
@@ -40,18 +57,8 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
     print(f"输出文件：{output_filename}")
     print("开始录制... 按 'q' 键停止并保存")
 
-    # 选择合适的编码器
-    fourcc_options = [
-        cv2.VideoWriter_fourcc(*'mp4v'),
-        cv2.VideoWriter_fourcc(*'XVID'),
-        cv2.VideoWriter_fourcc(*'MJPG')
-    ]
-
-    out = None
-    for fourcc in fourcc_options:
-        out = cv2.VideoWriter(output_filename, fourcc, target_fps, (frame_width, frame_height))
-        if out.isOpened():
-            break
+    fourcc = select_fourcc(output_filename)
+    out = cv2.VideoWriter(output_filename, fourcc, target_fps, (frame_width, frame_height))
 
     if out is None or not out.isOpened():
         print("错误：无法创建视频写入器")
@@ -62,6 +69,7 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
     start_time = time.time()
     frame_count = 0
     dropped_frames = 0
+    consecutive_failures = 0
 
     # 创建显示窗口
     cv2.namedWindow('Camera Recording', cv2.WINDOW_NORMAL)
@@ -75,7 +83,12 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
 
             if not ret:
                 dropped_frames += 1
+                consecutive_failures += 1
+                if consecutive_failures >= max_read_failures:
+                    print(f"\n连续读取失败 {max_read_failures} 次，停止录制...")
+                    break
                 continue
+            consecutive_failures = 0
 
             # 写入视频（不添加任何文字覆盖）
             out.write(frame)
@@ -84,9 +97,6 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
             # 计算时间信息
             current_time = time.time()
             elapsed_time = current_time - start_time
-
-            # 实时 FPS 计算
-            actual_fps = frame_count / elapsed_time if elapsed_time > 0 else 0
 
             # 显示帧（纯净画面，无 OSD）
             cv2.imshow('Camera Recording', frame)
@@ -111,7 +121,8 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
         end_time = time.time()
         # 清理资源
         cap.release()
-        out.release()
+        if out is not None:
+            out.release()
         cv2.destroyAllWindows()
 
     # 输出详细统计信息
@@ -129,7 +140,7 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
     print(f"视频时长：{video_duration:.3f} 秒")
     print(f"时长差异：{duration_diff:.3f} 秒 ({duration_diff_percent:.1f}%)")
     print(f"设定帧率：{target_fps} FPS")
-    print(f"实际帧率：{recorded_fps:.2f} FPS")
+    print(f"平均帧率：{recorded_fps:.2f} FPS")
     print(f"丢帧数：{dropped_frames}")
     print(f"文件大小：{os.path.getsize(output_filename) / (1024 * 1024):.2f} MB")
     print(f"视频已保存至：{output_filename}")
@@ -145,20 +156,17 @@ def record_video(output_filename="recorded_video.mp4", camera_index=3, target_fp
 
 def main():
     """主函数"""
-    # 生成带时间戳的文件名
     # 摄像头参数
     target_fps = 30
-
-
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"video_{timestamp}.mp4"
+    filename = resolve_output_path(f"video_{timestamp}.mp4")
 
 
     print("摄像头录像程序启动")
     print("=" * 50)
 
     # 尝试不同摄像头索引
-    for cam_idx in [0,3, 4, 5, 6, 7, 8, 9, 10]:
+    for cam_idx in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
         print(f"尝试摄像头索引 {cam_idx}...")
         if record_video(filename, cam_idx, target_fps):
             print("录制成功完成！")
